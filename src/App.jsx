@@ -7,8 +7,9 @@ export default function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [locationName, setLocationName] = useState("Москва");
 
-  const fetchWeather = async (coords) => {
+  const fetchWeather = async (coords, name) => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -17,6 +18,7 @@ export default function App() {
 				&timezone=auto&forecast_days=5`
       );
       setWeatherData(response.data);
+      setLocationName(name);
       setError(null);
     } catch (err) {
       setError("Ошибка загрузки данных: " + err.message);
@@ -25,18 +27,23 @@ export default function App() {
     }
   };
 
-	useEffect(() => {
+  useEffect(() => {
     const moscowCoords = { lat: 55.7558, lon: 37.6173 };
-    fetchWeather(moscowCoords);
+    fetchWeather(moscowCoords, "Москва");
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
       <div className="max-w-3xl mx-auto">
-        {<CitySelector onSelect={fetchWeather} />}
+        <CitySelector onSelect={(coords, name) => fetchWeather(coords, name)} />
         {loading && <p className="text-center">Загрузка...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
-        {weatherData && <WeatherDisplay weatherData={weatherData} />}
+        {weatherData && (
+          <WeatherDisplay
+            weatherData={weatherData}
+            locationName={locationName}
+          />
+        )}
       </div>
     </div>
   );

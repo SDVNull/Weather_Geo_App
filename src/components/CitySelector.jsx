@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
 
-export default function CitySelector  ({ onSelect }) {
+export default function CitySelector({ onSelect }) {
   const [query, setQuery] = useState("");
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isProgrammaticChange = useRef(false);
+  const timer = useRef(null);
 
   useEffect(() => {
     if (isProgrammaticChange.current) {
@@ -39,11 +39,28 @@ export default function CitySelector  ({ onSelect }) {
       }
     };
 
-    const timer = setTimeout(fetchCities, 500);
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
+
+    timer.current = setTimeout(fetchCities, 500);
+
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer.current);
     };
   }, [query]);
+
+  const handleQueryChange = (e) => {
+    isProgrammaticChange.current = false;
+    setQuery(e.target.value);
+  };
+
+  const handleCityClick = (city) => {
+    isProgrammaticChange.current = true;
+    onSelect({ lat: city.lat, lon: city.lon }, city.display_name.split(',')[0]);
+    setQuery(city.display_name);
+    setCities([]);
+  };
 
   return (
     <div className="relative mb-8">
@@ -56,7 +73,7 @@ export default function CitySelector  ({ onSelect }) {
         className="w-full p-3 rounded-lg border border-gray-300"
         placeholder="Введите город..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleQueryChange}
       />
 
       {(isLoading || cities.length > 0) && (
@@ -68,12 +85,7 @@ export default function CitySelector  ({ onSelect }) {
               <div
                 key={`${city.lat}-${city.lon}`}
                 className="p-3 hover:bg-gray-100 cursor-pointer border-t"
-                onClick={() => {
-                  isProgrammaticChange.current = true;
-                  onSelect({ lat: city.lat, lon: city.lon });
-                  setQuery(city.display_name);
-                  setCities([]);
-                }}
+                onClick={() => handleCityClick(city)}
               >
                 {city.display_name}
               </div>

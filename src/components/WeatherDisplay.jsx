@@ -2,13 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 import WeatherIcon from './WeatherIcon';
 
-export default function WeatherDisplay ({ weatherData }) {
+export default function WeatherDisplay ({ weatherData, locationName }) {
   const [activeTab, setActiveTab] = useState("current");
 
   if (!weatherData) return null;
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-lg">
+			<h2 className="text-xl font-semibold mb-4 text-center">{locationName}</h2>
       <div className="flex gap-4 mb-6">
         <button
           className={`px-4 py-2 rounded-lg ${
