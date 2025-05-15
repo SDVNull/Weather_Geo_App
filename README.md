@@ -1,12 +1,34 @@
-# React + Vite
+Weather App for SkillFactory
+Простое приложение для просмотра текущей погоды и прогноза на 5 дней.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Основные функции
+Поиск города с автодополнением
+Отображение текущей погоды с иконками
+Прогноз на 5 дней с минимальной/максимальной температурой
+Адаптивный дизайн для всех устройств
 
-Currently, two official plugins are available:
+Технологии
+React
+Tailwind CSS
+Open-Meteo API (погодные данные)
+Nominatim API (поиск городов)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Установка
+Клонировать репозиторий:
+git clone https://github.com/SDVNull/Weather_Geo_App.git
 
-## Expanding the ESLint configuration
+Установить зависимости:
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Запустить приложение:
+npm run dev
+
+Использование
+Введите название города в поисковую строку
+Переключайтесь между вкладками "Сейчас" и "5 дней"
+
+Особенности
+Полностью на русском языке
+Оптимизированная загрузка данных
+Доступный интерфейс (ARIA-атрибуты)
+Кросс-браузерная совместимость

@@ -36,7 +36,13 @@ export default function App() {
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
       <main className="max-w-3xl mx-auto">
         <CitySelector onSelect={(coords, name) => fetchWeather(coords, name)} />
-        {loading && <p className="text-center">Загрузка...</p>}
+        <div className="relative h-4 mb-4 transition-all">
+          {loading && (
+            <p className="absolute inset-0 text-center animate-pulse">
+              Загрузка...
+            </p>
+          )}
+        </div>
         {error && <p className="text-center text-red-500">{error}</p>}
         {weatherData && (
           <WeatherDisplay
