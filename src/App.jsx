@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
-      <div className="max-w-3xl mx-auto">
+      <main className="max-w-3xl mx-auto">
         <CitySelector onSelect={(coords, name) => fetchWeather(coords, name)} />
         {loading && <p className="text-center">Загрузка...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
@@ -44,7 +44,10 @@ export default function App() {
             locationName={locationName}
           />
         )}
-      </div>
+      </main>
+      <footer className="max-w-3xl mx-auto mt-8 text-center text-gray-500 text-sm">
+        <p>Данные о погоде предоставлены Open-Meteo</p>
+      </footer>
     </div>
   );
 }

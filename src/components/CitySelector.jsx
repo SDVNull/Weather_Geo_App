@@ -57,17 +57,21 @@ export default function CitySelector({ onSelect }) {
 
   const handleCityClick = (city) => {
     isProgrammaticChange.current = true;
-    onSelect({ lat: city.lat, lon: city.lon }, city.display_name.split(',')[0]);
+    onSelect({ lat: city.lat, lon: city.lon }, city.display_name.split(",")[0]);
     setQuery(city.display_name);
     setCities([]);
   };
 
   return (
     <div className="relative mb-8">
-      <h1 className="text-3xl md:text-3xl font-extrabold text-blue-500">
+      <h1 className="text-2xl md:text-3xl font-extrabold text-blue-500">
         Прогноз погоды
       </h1>
+      <label htmlFor="city-search" className="sr-only">
+        Поиск города
+      </label>
       <input
+        id="city-search"
         type="text"
         name="CitySelector"
         className="w-full p-3 rounded-lg border border-gray-300"
