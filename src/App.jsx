@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import WeatherIcon from "./components/WeatherIcon";
 
@@ -6,8 +6,14 @@ const CitySelector = ({ onSelect }) => {
   const [query, setQuery] = useState("");
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isProgrammaticChange = useRef(false);
 
   useEffect(() => {
+    if (isProgrammaticChange.current) {
+      isProgrammaticChange.current = false;
+      return;
+    }
+
     if (query.length < 3) {
       setCities([]);
       return;
@@ -41,7 +47,11 @@ const CitySelector = ({ onSelect }) => {
 
   return (
     <div className="relative mb-8">
-      <h1 className="text-3xl font-bold text-blue-500">Прогноз погоды</h1>
+      <h1 className="text-3xl md:text-3xl font-extrabold bg-clip-text text-transparent 
+			bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] 
+			bg-[length:200%_auto] animate-gradient">
+        Прогноз погоды
+      </h1>
       <input
         type="text"
         className="w-full p-3 rounded-lg border border-gray-300"
@@ -60,6 +70,7 @@ const CitySelector = ({ onSelect }) => {
                 key={`${city.lat}-${city.lon}`}
                 className="p-3 hover:bg-gray-100 cursor-pointer border-t"
                 onClick={() => {
+                  isProgrammaticChange.current = true;
                   onSelect({ lat: city.lat, lon: city.lon });
                   setQuery(city.display_name);
                   setCities([]);
@@ -176,4 +187,3 @@ export default function App() {
     </div>
   );
 }
-
