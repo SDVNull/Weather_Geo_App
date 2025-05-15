@@ -47,13 +47,12 @@ const CitySelector = ({ onSelect }) => {
 
   return (
     <div className="relative mb-8">
-      <h1 className="text-3xl md:text-3xl font-extrabold bg-clip-text text-transparent 
-			bg-[linear-gradient(to_right,theme(colors.indigo.400),theme(colors.indigo.100),theme(colors.sky.400),theme(colors.fuchsia.400),theme(colors.sky.400),theme(colors.indigo.100),theme(colors.indigo.400))] 
-			bg-[length:200%_auto] animate-gradient">
+      <h1 className="text-3xl md:text-3xl font-extrabold text-blue-500">
         Прогноз погоды
       </h1>
       <input
         type="text"
+        name="CitySelector"
         className="w-full p-3 rounded-lg border border-gray-300"
         placeholder="Введите город..."
         value={query}
@@ -114,7 +113,7 @@ const WeatherDisplay = ({ weatherData }) => {
 
       {activeTab === "current" ? (
         <div>
-          <div className="text-center mb-6">
+          <div className="text-center mb-6 flex flex-col items-center">
             <h2 className="text-3xl font-bold mb-2">
               {weatherData.current.temperature_2m}°C
             </h2>
@@ -130,14 +129,15 @@ const WeatherDisplay = ({ weatherData }) => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {weatherData.daily.time.map((date, index) => (
-            <div key={date} className="p-4 bg-gray-50 rounded-lg text-center">
+            <div key={date} className="p-4 bg-gray-50 rounded-lg text-center mb-6 flex flex-col justify-center h-full">
+              <p>{new Date(date).toLocaleDateString("ru-RU", { day: "numeric", month: "short" })}</p>
               <p className="font-medium mb-2">
                 {new Date(date).toLocaleDateString("ru-RU", {
-                  weekday: "short",
+                  weekday: "long",
                 })}
               </p>
               <WeatherIcon code={weatherData.daily.weather_code[index]} />
-              <div className="mt-2">
+              <div className="mt-auto">
                 <span className="text-red-500">
                   {weatherData.daily.temperature_2m_max[index]}°
                 </span>
